@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<bean id="myFortuneService"
+		class="com.demo.HappyFortuneService">
+	</bean>
+	<bean id="myNewFortuneService"
+		class="com.demo.NewFortuneService">
+	</bean>
+	<bean id="myCoach"
+ 		class="com.demo.BaseballCoach">	 		
+ 			<constructor-arg ref="myFortuneService"/>
+ 	</bean>
+ 	<bean id="myCoach2"
+ 		class="com.demo.TrackCoach">	 		
+ 			<constructor-arg ref="myFortuneService"/>
+ 	</bean>
+ 	
+ 	
+ 	<!-- Load properties file-->
+ 	<context:property-placeholder location="classpath:sport.properties"/>
+ 	
+ 	<!--这是setter injection的实例-->
+ 	<!-- property "name" attribute会引导Spring去找CricketCoach class里面的setFortuneService. 总结: 只要你系name attribute打的名字，Spring will tempt to find a setter method associate with the property name-->
+ 	<bean
+ 		id="myCricketCoach" class="com.demo.CricketCoach">
+ 		<property name="fortuneService" ref="myNewFortuneService" />	
+ 		<!-- Inject literal value; Spring 会找setEmail method in CricketCoach class -->
+ 		<property name="email" value="${foo.email}" />
+ 		<property name="team" value="${foo.team}" />
+ 	</bean>
+ 	
+    <bean id="newInterface"
+    	class="com.demo.PingpongCoach">
+    
+    </bean>
+ 	
+ 	
+
+
+</beans>
+
+
+
+
+
